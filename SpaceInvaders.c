@@ -4,7 +4,7 @@
 #include "Nokia5110.h"
 #include "Random.h"
 #include "TExaS.h"
-void Timer2_Init(unsigned long period);
+
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void); 
 void Delay100ms(unsigned long count); // time delay in 0.1 seconds
@@ -96,19 +96,7 @@ void PortF_Init(void){ volatile unsigned long delay;
   GPIO_PORTF_PUR_R = 0x11;          // enable pullup resistors on PF4,PF0       
   GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital pins PF4-PF0        
 }
-void PORTE_INIT(void){
-	volatile unsigned long delay;
-	SYSCTL_RCGC2_R |= 0x00000010;     // 1) F clock
-  delay = SYSCTL_RCGC2_R;           // delay   
-  GPIO_PORTE_LOCK_R = 0x4C4F434B;   // 2) unlock PortE
-  GPIO_PORTE_CR_R = 0x03;           // allow changes to PE2       
-  GPIO_PORTE_AMSEL_R = 0x00;        // 3) disable analog function
-  GPIO_PORTE_PCTL_R = 0x00000000;   // 4) GPIO clear bit PCTL  
-  GPIO_PORTE_DIR_R = 0x02;          // 5) PE0 input, PE1 output   
-  GPIO_PORTE_AFSEL_R = 0x00;        // 6) no alternate function
-  GPIO_PORTE_PDR_R= 0x01;          // enable pulldown resistors on PE0       
-  GPIO_PORTE_DEN_R = 0x01;          // 7) enable digital pins PE0-PE1
-}
+
 // initalization the characters 
 struct State {
 
@@ -349,11 +337,13 @@ void Draw(void){ int i;
 void PLmoving(void){
 
 		  PortF_Init();  
+
 	 EnableInterrupts();
- 
+
+	
     SW1 = GPIO_PORTF_DATA_R&0x10; 
 	SW2 = GPIO_PORTF_DATA_R&0x01;
-		// SW3 = GPIO_PORTE_DATA_R&0x01;     // read PE0 into SW3
+		
 	 if((!SW1)&&(!SW2)){
 		// both pressed
 		gun[0].life=1;
@@ -365,8 +355,10 @@ void PLmoving(void){
     }
 	
 		else{                           
-      if((!SW1)&&(SW2)){  
+      if((!SW1)&&(SW2)){ 
+			
 				// just SW1 pressed
+			
 					plMoveR();
 		
 Draw();
