@@ -80,7 +80,7 @@ const unsigned char Laser0[] = {
 
 
 
-unsigned long SW1,SW2,SW3;//initalization the switch 
+unsigned long SW1,SW2; //initalization the switch 
 
 
 // port 
@@ -178,7 +178,7 @@ void gunMove (void){
 
 	gun[0].life=1;
 
-			if(king[0].x == gun[0].x &&gun[0].y ==king[0].y){
+		/*	if(king[0].x == gun[0].x &&gun[0].y ==king[0].y){
 			
 			black[0].x=	king[0].x;
 				 black[0].y=	king[0].y; 
@@ -189,9 +189,10 @@ void gunMove (void){
 			
 	
 			gun[0].life=0;
+				
 			gun[0].y	=45;	
 			
-			}
+			}*/
 		if((gun[0].x == 40||gun[0].x == 35||gun[0].x == 45)&&gun[0].y == Enemy[2].y ){
 black[0].x=	Enemy[2].x;
 				 black[0].y=	Enemy[2].y; 
@@ -232,9 +233,7 @@ black[0].x=	Enemy[1].x;
 			Enemy[0].life=0;
 			 score( );
 	
-			 black[0].x=	Enemy[0].x;
-				 black[0].y=	Enemy[0].y; 
-			 	 black[0].life=1;
+		
 			gun[0].life=0;
 			 	gun[0].y	=45;
 		}
@@ -475,7 +474,7 @@ void moving(void){
 	start();
 		Delay100ms(1);
 		Draw();	
-for(f=0;f<14;f++){
+for(f=0;f<8;f++){
 
 Move();//function to move the enemy and the king 
 	Draw();// function to draw the character 
